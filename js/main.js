@@ -10,8 +10,8 @@ const Litems  = document.querySelectorAll('.theme_Box ul li');
 const color_Box  = document.querySelectorAll('.colorBox')
 const menuBtn    = document.querySelector('.Toggle');
 const status_menu    = document.querySelector('.menu');
-//Create Array To Store Task
 
+//Create Array To Store Task
 let TasksContainer =[];
 
 //Fix The Local Storage Return to 0 Items After Reload page
@@ -31,7 +31,9 @@ DeleteTasks();
 GetPickedColor();
 
 //Incrament tasks Count 
-tasksCount.innerHTML = TasksContainer.length
+if(TasksContainer !== null){
+    tasksCount.innerHTML = TasksContainer.length 
+}
 
 
 addBtn.addEventListener( 'click',()=>{
