@@ -1,134 +1,202 @@
-//toogle menu
 const inputFiled = document.querySelector('#textInput');
 const addBtn     = document.querySelector('#addButton');
 const tasksCount = document.querySelector('.tasksCount span');
-const finishedTasks = document.querySelector('.TasksFinished span');
-const masterDiv  = document.querySelector('.taskContaienr')
+const masterDiv  = document.querySelector('.taskContaienr');
+const clear_all  = document.querySelector('.Clear_all');
+const Theme_Btn  = document.querySelector('.Theme')
+const Theme_picker_Box = document.querySelector('.theme_Box');
+const Litems  = document.querySelectorAll('.theme_Box ul li');
+const color_Box  = document.querySelectorAll('.colorBox')
 
-//add array that store tasks
-let arrayTasks=[];
+//Create Array To Store Task
 
-console.log(arrayTasks);
+let TasksContainer =[];
 
-
-if (arrayTasks.length === 0){
-    arrayTasks = JSON.parse(window.localStorage.getItem('task'));
+//Fix The Local Storage Return to 0 Items After Reload page
+if (TasksContainer == '' && TasksContainer !== null ) {
+        TasksContainer = JSON.parse(window.localStorage.getItem('Task'))
 }
 
-//triger function that getting saved in local storage
-getSaved();
+//Trigger Delete From Page Function
+DeleteTasks();
 
-addBtn.addEventListener('click', ()=>{
+//Get Items From LocalStorage in Page Load
+GetLocalStorage();
+
+GetPickedColor();
+//Incrament tasks Count 
+tasksCount.innerHTML = TasksContainer.length
+
+
+addBtn.addEventListener( 'click',()=>{
     if(inputFiled.value === ""){
         Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: `This Filed Can't Be Left Blank `,
+            icon:'error',
+            title:'Oops',
+            text: 'Slowly Dont leave input Filed blacnk',
         })
     }else{
-        addTask(inputFiled.value);
-        inputFiled.value="";
+        STORE_VALUE(inputFiled.value.trim());
+        inputFiled.value = '';
     }
 })
 
-function addTask(inValue){
-    let newTask={
-        id:Date.now().toString(),
-        title:inValue,
-        completeStat:false,
-    }
-    //push task to empty array
-    arrayTasks.push(newTask);
+function STORE_VALUE(inputValue){
+    //Create Object to Store Task [ value & ID & ComleteStat]
+    let Task = {
 
-    //add task to page
-    addTaskToPage(arrayTasks);
+        ID: Date.now(),
+        Title: inputValue,
+        CompleteStat:false,
+    } 
+
+    //Pushing The (Task Object) to TasksContainer
+    TasksContainer.push(Task);
+
+    //Adding The (Task Container) Values To Page As Html Elements
+    BUILD_HTML_ELEMENT(TasksContainer);
     
-    //add to localStorage
-    saveTask(arrayTasks);
-    
+    //Adding Tasks To LocalStorage 
+    SaveLocalStorage(TasksContainer);
+
+    //Incrament tasks Count 
+    tasksCount.innerHTML = TasksContainer.length
+
+    //Focus on Input Filed After Adding Task
+    FocusIN(inputFiled);
 }
-
-
-
-function addTaskToPage(x){
-    masterDiv.innerHTML="";
-
-    x.forEach(element => {
-        const div = document.createElement('div');
-        div.className ='task';
-        div.setAttribute('data-id' , element.id)
-        const h4 = document.createElement('h4');
-        h4.className = 'selectCircle';
-        const h3 = document.createElement('h3');
-        h3.className = "taskTitle";
-        //finish btn
-        const iconFinish = document.createElement('ion-icon')
-        iconFinish.setAttribute('name','checkmark-outline')
-        iconFinish.className = 'taskFinished';
-        iconFinish.onclick=()=>{
-
-        //    newTask.completeStat=true;
+function BUILD_HTML_ELEMENT(ArrayValues){
+    //Empty The Task Elements Container Div
+    masterDiv.innerHTML='';
+    //Looping on (TasksContainer) values
+    ArrayValues.map( (value)=>{
+        //Create Div For task and set class & Attribute
+        let div = document.createElement('div');
+        div.className= "task"
+        if (value.CompleteStat == true) {
+            div.className = 'task done'
         }
-    
-        //delete btn
-        const iconDel = document.createElement('ion-icon')
-        iconDel.setAttribute('name','trash-outline')
-        iconDel.className = 'deleteBTN';
-    
-        //append step
-        div.appendChild(h4)
+        div.setAttribute('data-id' , value.ID);
+        //Create Select 
+        let h4 = document.createElement('h4');
+        h4.className = 'selectCircle';
+        //Create Element For Display Task Title
+        let h3 = document.createElement('h3');
+        h3.className = 'taskTitle';
+        h3.appendChild(document.createTextNode(value.Title));
+        //Create Icon For Delete BTN
+        let Del_Ico = document.createElement('ion-icon');
+        Del_Ico.setAttribute('name' , 'trash-outline');
+        Del_Ico.className= 'deleteBTN';
+        //Create Element For Finish BTN
+        let Finish_Ico = document.createElement('ion-icon');
+        Finish_Ico.setAttribute('name' , 'checkmark-outline');
+        Finish_Ico.className= "taskFinished";
+
+        //Append Child Element TO div Parent Element
+        div.appendChild(h4);
         div.appendChild(h3);
-        div.appendChild(iconFinish);
-        div.appendChild(iconDel)
-        h3.appendChild(document.createTextNode(element.title));
-        //append Maindiv to div task container
-        masterDiv.appendChild(div);
-        inputFiled.value="";
-   
-    });
-
-}
-
-
-
-    //delete task 
-    masterDiv.addEventListener('click',(event)=>{
-     if(event.target.classList.contains("deleteBTN")){
-      //  let test = event.target.parentElement.getAttribute('data-id');
-      //  console.log(test); 
+        div.appendChild(Del_Ico);
+        div.appendChild(Finish_Ico);
         
-        //delete from local storage
+        //Append div Parent Element To Div Task Container Div
+        masterDiv.appendChild(div);
 
-        //Delete From Page
-        event.target.parentElement.remove();
-    }
 
-    //finish task
-    if(event.target.classList.contains('taskFinished')){
-        event.target.parentElement.classList.toggle('done')
-    }
 
     })
+}
 
+    //Adding Tasks To LocalStorage 
 
-    //add Task to LocalStorage
-    function saveTask(paramTask){
-        window.localStorage.setItem('Task' , JSON.stringify(paramTask) )
+    function SaveLocalStorage(Task){
+        window.localStorage.setItem('Task' , JSON.stringify(Task));
     }
 
-    //GET FROM LOCAL STORAGE
-    function getSaved(){
-        let data = window.localStorage.getItem('Task');
-        if (data) {
-            let ConvLocStor = JSON.parse(data);
-            addTaskToPage(ConvLocStor);
-        }
-
-    }
-
-    //ON CLICK DELETE BTN WILL DELETE ALSO FROM LOCAL STORAGE
-    function deleteFromSaved(CurrentTaskID){
-        for( let i = 0 ; i < arrayTasks.length ; i++){
-            return arrayTasks[i]
+    //Get Elements From Local Storage
+    function GetLocalStorage(){
+        let Data = window.localStorage.getItem('Task')
+        if(Data){
+            let DataConverted = JSON.parse(Data);
+                BUILD_HTML_ELEMENT(DataConverted)
         }
     }
+
+    //Focus On Input Filed 
+    function FocusIN(input){
+        inputFiled.focus()
+    }
+
+    //Delete Element From Page & Local Storage
+    function DeleteTasks(){
+        masterDiv.addEventListener( 'click' , (e)=>{
+            if (e.target.classList.contains('deleteBTN')) {
+                e.target.parentElement.remove();
+
+                //Delete From LocalStorage
+                DeleteStoredItem(e.target.parentElement.getAttribute('data-id'))
+            }
+        })
+    }
+
+    //Delete From LocalStorage
+    function DeleteStoredItem(item){
+        
+        //Remove Task From SaveLocalStorage;
+        TasksContainer = TasksContainer.filter( arrValue => arrValue.ID != item );
+        SaveLocalStorage(TasksContainer);
+    }
+
+    //Finishs Task BTN
+    masterDiv.addEventListener( "click",e=>{
+        if(e.target.classList.contains('taskFinished')){
+            e.target.parentElement.classList.toggle('done');
+            Finish_Task_Stat(e.target.parentElement.getAttribute('data-id'));
+
+        }
+    })
+
+    function Finish_Task_Stat(TaskID){
+        TasksContainer.map( (stat)=> {
+            if (stat.ID == TaskID) {
+                stat.CompleteStat == false ? stat.CompleteStat = true : stat.CompleteStat = false
+                SaveLocalStorage(TasksContainer);
+            }
+        })
+    }
+
+    //clear All BTN Properties 
+    /* Hi , Its Function is Stopeed Until Fix Issue */
+    // clear_all.addEventListener('click',()=>{
+    //     masterDiv.innerHTML="";
+    //     window.localStorage.removeItem('Task')
+    // })
+
+
+    // Theme Proprites Start
+
+    //add event to Toggle theme box open or close
+    Theme_Btn.addEventListener('click' , ()=>{
+        Theme_picker_Box.classList.toggle('theme_Box_opened')
+    } )
+
+    //Add color to li (Smoll Box's) with attribute 
+        Litems.forEach((v)=>{
+            v.addEventListener( 'click',e =>{
+
+                // window.localStorage.setItem('Task_Back_Color', e.target.getAttribute('data-color'));
+                
+                // masterDiv.style.backgroundColor=window.localStorage.getItem('Task_Back_Color')
+                SavePickedColor(e.target.getAttribute('data-color'));
+                GetPickedColor();
+            })
+        })
+
+        //Save Picked Color To Local Storage 
+        function SavePickedColor(colorParam){
+            window.localStorage.setItem('Task_back_Color',colorParam)
+        }
+        function GetPickedColor(){
+            window.localStorage.getItem('Task_back_Color');
+            masterDiv.style.backgroundColor=window.localStorage.getItem('Task_back_Color');
+        }

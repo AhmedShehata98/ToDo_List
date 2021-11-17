@@ -56,6 +56,42 @@ header .Theme{
   color: var(--main-clr);
   margin-right: 15px;
 }
+header .theme_Box{
+  position: absolute;
+  display: none;
+  top: 80%;
+  right: 10px;
+  background-color: var(--sec-clr);
+  width: 225px;
+  height: fit-content;
+  box-shadow: 0 0 14px 0px #252525;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.theme_Box_opened{
+  display: block !important;
+}
+
+header .theme_Box h3{
+  margin: 0 auto 25px;
+  padding: 10px;
+  text-align: center;
+  background-color: #BBBBBB;
+}
+header .theme_Box ul{
+  display: grid;
+  grid-row-gap: 10px;
+  list-style: none;
+  padding: 15px;
+  grid-template-columns: repeat(auto-fill ,minmax(50px,1fr) );
+}
+header .theme_Box ul li{
+  background-color: #000 ;
+  width: 50px;
+  height: 50px;
+
+}
+
 header .logo .logoTXT{
   font-size: 1.5em;
 }
