@@ -1,5 +1,6 @@
 const inputFiled = document.querySelector('#textInput');
 const addBtn     = document.querySelector('#addButton');
+const add_container = document.querySelector('.add_container');
 const tasksCount = document.querySelector('.tasksCount span');
 const masterDiv  = document.querySelector('.taskContaienr');
 const clear_all  = document.querySelector('.Clear_all');
@@ -7,7 +8,8 @@ const Theme_Btn  = document.querySelector('.Theme')
 const Theme_picker_Box = document.querySelector('.theme_Box');
 const Litems  = document.querySelectorAll('.theme_Box ul li');
 const color_Box  = document.querySelectorAll('.colorBox')
-
+const menuBtn    = document.querySelector('.Toggle');
+const status_menu    = document.querySelector('.menu');
 //Create Array To Store Task
 
 let TasksContainer =[];
@@ -17,13 +19,17 @@ if (TasksContainer == '' && TasksContainer !== null ) {
         TasksContainer = JSON.parse(window.localStorage.getItem('Task'))
 }
 
-//Trigger Delete From Page Function
-DeleteTasks();
 
 //Get Items From LocalStorage in Page Load
 GetLocalStorage();
 
+
+//Trigger Delete From Page Function
+DeleteTasks();
+
+
 GetPickedColor();
+
 //Incrament tasks Count 
 tasksCount.innerHTML = TasksContainer.length
 
@@ -33,7 +39,7 @@ addBtn.addEventListener( 'click',()=>{
         Swal.fire({
             icon:'error',
             title:'Oops',
-            text: 'Slowly Dont leave input Filed blacnk',
+            text: 'Slowly Dont leave input Filed blank',
         })
     }else{
         STORE_VALUE(inputFiled.value.trim());
@@ -172,6 +178,10 @@ function BUILD_HTML_ELEMENT(ArrayValues){
     //     window.localStorage.removeItem('Task')
     // })
 
+    //add click event t open status menu
+    menuBtn.addEventListener('click' ,()=>{
+        status_menu.classList.toggle('theme_Box_opened')
+    })
 
     // Theme Proprites Start
 
@@ -199,4 +209,6 @@ function BUILD_HTML_ELEMENT(ArrayValues){
         function GetPickedColor(){
             window.localStorage.getItem('Task_back_Color');
             masterDiv.style.backgroundColor=window.localStorage.getItem('Task_back_Color');
+            add_container.style.backgroundColor=window.localStorage.getItem('Task_back_Color');
         }
+        

@@ -5,7 +5,7 @@
 body{
   margin: 0;
   padding: 0;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Cairo', sans-serif;
 }
 :root{
   --main-clr:#185ADB;
@@ -45,6 +45,72 @@ header .Theme:hover{
   -ms-transform: rotate(90deg);
   -o-transform: rotate(90deg);
 }
+header .menu{
+  position: absolute;
+  display: none;
+  top: 80%;
+  left: 10px;
+  background-color: var(--sec-clr);
+  width: 225px;
+  height: fit-content;
+  box-shadow: 0 0 12px 0px #292929;
+  border-radius: 7px;
+  overflow: hidden;
+}
+header .menu h3 {
+  text-align: center;
+  background-color: #BBBBBB;
+  margin: 0 auto 20px;
+  padding: 15px;
+}
+header .menu ul{
+  list-style: none;
+  padding: 15px;
+  
+}
+header .menu ul li{
+  padding: 10px 0;
+  font-size: 1.1em;
+  font-weight: bold;
+}
+header .menu ul li.Clear_all{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  cursor: pointer;
+  color: #F8F8F8;
+  list-style:none;
+  z-index: 1;
+}
+header .menu ul li.tasksCount span{
+  position: relative;
+  margin-left: 15px;
+  color: #FFF;
+  z-index: 1;
+}
+header .menu ul li.tasksCount span::before{
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  padding: 15px;
+  background-color: var(--main-clr);
+  transform: translate(-50% ,-50%);
+  border-radius: 50%;
+  z-index: -1;
+}
+header .menu ul li.Clear_all::before{
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 35px;
+  width: 100%;
+  background-color: var(--main-clr);
+  transform: translate(-50% , -50%);
+  z-index: -1;
+}
 header .logo{
   height: 70px;
   display: flex;
@@ -64,8 +130,8 @@ header .theme_Box{
   background-color: var(--sec-clr);
   width: 225px;
   height: fit-content;
-  box-shadow: 0 0 14px 0px #252525;
-  border-radius: 20px;
+  box-shadow: 0 0 12px 0px #292929;
+  border-radius: 7px;
   overflow: hidden;
 }
 .theme_Box_opened{
@@ -102,9 +168,9 @@ header .logo .logoICO{
 }
 section {
   position: relative;
-  min-height: calc(100vh - 91px);
+  min-height: calc(100vh - 71px);
   display: flex;
-  background-image: url("../img/5.jpg");
+  background-image: url("../img/Main_Backgrond.jpg");
   background-size: cover;
   background-repeat: no-repeat;
 
@@ -200,7 +266,7 @@ section .container{
   align-items: center;
   padding: 20px;
   width: 100%;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(5px);
 
 }
 
@@ -212,6 +278,13 @@ section .container .add_container{
   padding: 20px;
   background-color: var(--main-clr);
   z-index: 6;
+}
+@media (max-width:768px) {
+  section .container .add_container{
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+  }
 }
 section .container .add_container .txInputLbl{
   font-size: 1.3em;
@@ -227,6 +300,11 @@ section .container .add_container .textInput{
   -moz-transition:  opacity 0.3s;
   -ms-transition:  opacity 0.3s;
   -o-transition:  opacity 0.3s;
+}
+@media (max-width:768px) {
+  section .container .add_container .textInput{
+    width: 100%;
+  }
 }
 section .container .add_container .textInput:focus::placeholder{
   opacity: 0;
@@ -267,7 +345,6 @@ section .container .taskContaienr{
   flex-grow: 1;
   align-items: center;
   gap: 20px;
-  overflow-y: scroll;
 }
 section .container .taskContaienr .task{
   display: flex;
@@ -281,17 +358,23 @@ section .container .taskContaienr .task{
   border-radius: 4px;
 }
 section .container .taskContaienr .task.done{
-  background-color: aquamarine;
-  opacity: 0.5;
+  background-color: #00AF91;
+  opacity: 0.7;
   text-decoration: line-through;
 }
 section .container .taskContaienr .task .taskTitle {
-  font-size: 1.3em;
   font-weight: bold;
   padding: 10px 30px;
   width: 100%;
   margin: 0;
 
+}
+@media (max-width:768px) {
+  section .container .taskContaienr .task .taskTitle {
+    font-size: 15px;
+    padding: 0;
+    height: fit-content;
+  }
 }
 section .container .taskContaienr .task .selectCircle{
   padding: 8px;
