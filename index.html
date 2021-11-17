@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Start Google Font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <!-- End Google Font  -->
+        <title>ToDo app</title>
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+
+    </head>
+<body>
+<header>
+  <ion-icon name="menu-outline" class="Toggle"></ion-icon>
+    <div class="logo">
+    <ion-icon name="create-outline" class="logoICO"></ion-icon>
+    <h1 class="logoTXT">ToDo List</h1>
+  </div>
+  <nav>
+    <ion-icon name="ellipsis-horizontal-outline" class="Theme"></ion-icon>
+  </nav>
+</header>
+  <section>
+    <aside class="onSideMenu">
+      <li class="tasksCount">Tasks <span>0</span></li>
+      <li class="Clear_all"><ion-icon class="Clear_all_Ico" name="close"></ion-icon> Clear All Tasks</li>
+    </aside>
+    <div class="container">
+      <div class="taskContaienr">
+        <!-- <div class="task">
+          <h4 class="selectCircle">12</h4>
+          <h3 class="taskTitle">Task For Test</h3>
+          <ion-icon name="checkmark-outline" class="taskFinished"></ion-icon>
+          <ion-icon name="trash-outline" class="deleteBTN"></ion-icon>
+        </div> -->
+      </div>
+      <div class="add_container">
+        <label class="txInputLbl" for="textInput">Add Task</label>
+        <input class="textInput" type="text" placeholder="Enter Your Task Title here and prees on ( + ) button" id="textInput">
+        <ion-icon name="add-outline" class="addButton" id="addButton"></ion-icon>
+      </div>
+    </div>
+
+  </section>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="js/Script.js"></script>
+</body>
+</html>
