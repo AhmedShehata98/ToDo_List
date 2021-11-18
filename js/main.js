@@ -216,6 +216,9 @@ function BUILD_HTML_ELEMENT(ArrayValues){
         
         //Task Count Inc/decrement Function
         function INCREMENT_OR_DEC_CONT(){
-            document.querySelector('section aside li span').innerHTML = JSON.parse(window.localStorage.getItem('Task')).length;
-            tasksCount.innerHTML = JSON.parse(window.localStorage.getItem('Task')).length;
+            if( window.localStorage.getItem('Task') !== null)
+            {
+                document.querySelector('section aside li span').innerHTML = JSON.parse(window.localStorage.getItem('Task')).length;
+                tasksCount.innerHTML = JSON.parse(window.localStorage.getItem('Task')).length;
+            }
         }
