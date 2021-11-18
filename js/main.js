@@ -15,7 +15,6 @@ const status_menu    = document.querySelector('.menu');
 let TasksContainer =[];
 
 //Fix The Local Storage Return to 0 Items After Reload page
-
 if ( window.localStorage.getItem('Task') !== null && TasksContainer == '')
 {
     TasksContainer = JSON.parse(window.localStorage.getItem('Task'))
@@ -43,8 +42,14 @@ addBtn.addEventListener( 'click',()=>{
             text: 'Slowly Dont leave input Filed blank',
         })
     }else{
+
         STORE_VALUE(inputFiled.value.trim());
-        inputFiled.value = '';
+        inputFiled.innerHTML = '';
+
+        //Focus on Input Filed After Adding Task
+        FocusIN(inputFiled);
+        
+        //CHECK_USER_DATA(inputFiled.value);
     }
 })
 
@@ -69,8 +74,7 @@ function STORE_VALUE(inputValue){
     //Incrament tasks Count 
     INCREMENT_OR_DEC_CONT();
 
-    //Focus on Input Filed After Adding Task
-    FocusIN(inputFiled);
+
 }
 function BUILD_HTML_ELEMENT(ArrayValues){
     //Empty The Task Elements Container Div
@@ -174,15 +178,22 @@ function BUILD_HTML_ELEMENT(ArrayValues){
     }
 
     //clear All BTN Properties 
-    /* Hi , Its Function is Stopeed Until Fix Issue */
-    // clear_all.addEventListener('click',()=>{
-    //     masterDiv.innerHTML="";
-    //     window.localStorage.removeItem('Task')
-    // })
 
-    //add click event t open status menu
+    clear_all.addEventListener('click',()=>{
+        masterDiv.innerHTML="";
+        window.localStorage.removeItem('Task');
+        INCREMENT_OR_DEC_CONT();
+    })
+    document.querySelector('.Clear_all_aside').addEventListener('click' , ()=>{
+        masterDiv.innerHTML="";
+        window.localStorage.removeItem('Task')
+        INCREMENT_OR_DEC_CONT();
+    })
+
+    //add click event to open status menu
     menuBtn.addEventListener('click' ,()=>{
         status_menu.classList.toggle('theme_Box_opened')
+        Theme_picker_Box.classList.remove('theme_Box_opened')
     })
 
     // Theme Proprites Start
@@ -190,6 +201,8 @@ function BUILD_HTML_ELEMENT(ArrayValues){
     //add event to Toggle theme box open or close
     Theme_Btn.addEventListener('click' , ()=>{
         Theme_picker_Box.classList.toggle('theme_Box_opened')
+        status_menu.classList.remove('theme_Box_opened')
+
     } )
 
     //Add color to li (Smoll Box's) with attribute 
@@ -220,5 +233,32 @@ function BUILD_HTML_ELEMENT(ArrayValues){
             {
                 document.querySelector('section aside li span').innerHTML = JSON.parse(window.localStorage.getItem('Task')).length;
                 tasksCount.innerHTML = JSON.parse(window.localStorage.getItem('Task')).length;
+            }
+        }
+
+        function CHECK_USER_DATA(inData){
+
+            if (TasksContainer.length >=1) //its Means the TasksContainer its have a items
+            {
+
+                TasksContainer.forEach((tasks)=>{
+                    if (tasks.Title.includes(inData.toUpperCase()) ||  tasks.Title.includes(inData.toLowerCase()) ) // Check if there is repeated Tasks
+                    {
+                        Swal.fire({
+                            title: 'Repeated Input Text',
+                            text: "Don't Repeat Your Task",
+                            icon:'warning'
+                        })
+                        inputFiled.innerHTML = '';
+                    }else{
+                         STORE_VALUE(inputFiled.value.trim());
+                         inputFiled.innerHTML = '';
+                    }
+                })
+
+
+            }else{
+                STORE_VALUE(inputFiled.value.trim());
+                inputFiled.innerHTML = '';
             }
         }
