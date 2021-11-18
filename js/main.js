@@ -15,10 +15,11 @@ const status_menu    = document.querySelector('.menu');
 let TasksContainer =[];
 
 //Fix The Local Storage Return to 0 Items After Reload page
-if (TasksContainer == '' && TasksContainer !== null ) {
-        TasksContainer = JSON.parse(window.localStorage.getItem('Task'))
-}
 
+if ( window.localStorage.getItem('Task') !== null && TasksContainer == '')
+{
+    TasksContainer = JSON.parse(window.localStorage.getItem('Task'))
+}
 
 //Get Items From LocalStorage in Page Load
 GetLocalStorage();
@@ -31,7 +32,7 @@ DeleteTasks();
 GetPickedColor();
 
 //Incrament tasks Count 
-tasksCount.innerHTML = TasksContainer.length
+INCREMENT_OR_DEC_CONT();
 
 
 addBtn.addEventListener( 'click',()=>{
@@ -66,7 +67,7 @@ function STORE_VALUE(inputValue){
     SaveLocalStorage(TasksContainer);
 
     //Incrament tasks Count 
-    tasksCount.innerHTML = TasksContainer.length
+    INCREMENT_OR_DEC_CONT();
 
     //Focus on Input Filed After Adding Task
     FocusIN(inputFiled);
@@ -144,13 +145,14 @@ function BUILD_HTML_ELEMENT(ArrayValues){
             }
         })
     }
-
+    
     //Delete From LocalStorage
     function DeleteStoredItem(item){
         
         //Remove Task From SaveLocalStorage;
         TasksContainer = TasksContainer.filter( arrValue => arrValue.ID != item );
         SaveLocalStorage(TasksContainer);
+        INCREMENT_OR_DEC_CONT();
     }
 
     //Finishs Task BTN
@@ -212,3 +214,8 @@ function BUILD_HTML_ELEMENT(ArrayValues){
             add_container.style.backgroundColor=window.localStorage.getItem('Task_back_Color');
         }
         
+        //Task Count Inc/decrement Function
+        function INCREMENT_OR_DEC_CONT(){
+            document.querySelector('section aside li span').innerHTML = JSON.parse(window.localStorage.getItem('Task')).length;
+            tasksCount.innerHTML = JSON.parse(window.localStorage.getItem('Task')).length;
+        }
