@@ -159,6 +159,11 @@ function BUILD_HTML_ELEMENT(ArrayValues){
         INCREMENT_OR_DEC_CONT();
     }
 
+    //Clear Input Field 
+    document.querySelector('.empty_field').addEventListener('click' , (e)=>{
+        inputFiled.value='';
+    })
+
     //Finishs Task BTN
     masterDiv.addEventListener( "click",e=>{
         if(e.target.classList.contains('taskFinished')){
@@ -208,10 +213,6 @@ function BUILD_HTML_ELEMENT(ArrayValues){
     //Add color to li (Smoll Box's) with attribute 
         Litems.forEach((v)=>{
             v.addEventListener( 'click',e =>{
-
-                // window.localStorage.setItem('Task_Back_Color', e.target.getAttribute('data-color'));
-                
-                // masterDiv.style.backgroundColor=window.localStorage.getItem('Task_Back_Color')
                 SavePickedColor(e.target.getAttribute('data-color'));
                 GetPickedColor();
             })
@@ -225,6 +226,8 @@ function BUILD_HTML_ELEMENT(ArrayValues){
             window.localStorage.getItem('Task_back_Color');
             masterDiv.style.backgroundColor=window.localStorage.getItem('Task_back_Color');
             add_container.style.backgroundColor=window.localStorage.getItem('Task_back_Color');
+            document.querySelector('.Clear_all_aside').backgroundColor=window.localStorage.getItem('Task_back_Color');
+
         }
         
         //Task Count Inc/decrement Function

@@ -6,6 +6,8 @@ body{
   margin: 0;
   padding: 0;
   font-family: 'Cairo', sans-serif;
+  animation: loadPage ease ;
+  animation-duration: 0.5s;
 }
 :root{
   --main-clr:#185ADB;
@@ -39,11 +41,11 @@ header .Theme{
 header .Toggle:hover ,
 header .Theme:hover{
   color: var(--main-clr);
-  transform: rotate(90deg);
+  /* transform: rotate(90deg);
   -webkit-transform: rotate(90deg);
   -moz-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
-  -o-transform: rotate(90deg);
+  -o-transform: rotate(90deg); */
 }
 header .menu{
   position: absolute;
@@ -136,6 +138,7 @@ header .theme_Box{
 }
 .theme_Box_opened{
   display: block !important;
+  color: var(--main-clr);
 }
 
 header .theme_Box h3{
@@ -197,7 +200,7 @@ section aside li{
   font-weight: bold;
 
 }
-section aside li.Clear_all{
+section aside li.Clear_all_aside{
   position: relative;
   display: flex;
   align-items: center;
@@ -207,11 +210,11 @@ section aside li.Clear_all{
   list-style:none;
   z-index: 1;
 }
-section aside li.Clear_all .Clear_all_Ico{
+section aside li.Clear_all_aside .Clear_all_Ico{
   font-size: 1.2em;
   color: #810000;
 }
-section aside li.Clear_all::before{
+section aside li.Clear_all_aside::before{
   content: '';
   position: absolute;
   left: 50%;
@@ -271,6 +274,7 @@ section .container{
 }
 
 section .container .add_container{
+  position: relative;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -278,6 +282,17 @@ section .container .add_container{
   padding: 20px;
   background-color: var(--main-clr);
   z-index: 6;
+}
+section .container .add_container .empty_field{
+  position: absolute;
+  right: 9%;
+  font-size: 2.0em;
+  cursor: pointer;
+  color: #292929;
+  transition: color 0.3s ;
+}
+section .container .add_container .empty_field:hover{
+  color: #bb0101;
 }
 @media (max-width:768px) {
   section .container .add_container{
@@ -295,6 +310,7 @@ section .container .add_container .txInputLbl{
 section .container .add_container .textInput{
   flex-grow: 1;
   padding: 10px;
+  font-size: 1.1em;
   transition:  opacity 0.3s;
   -webkit-transition:  opacity 0.3s;
   -moz-transition:  opacity 0.3s;

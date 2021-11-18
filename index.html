@@ -10,6 +10,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;700;800&display=swap" rel="stylesheet">
         <!-- End Google Font  -->
         <title>ToDo app</title>
+        <link rel="stylesheet" href="css/animations.css">
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
 
@@ -49,7 +50,7 @@
   <section>
     <aside class="onSideMenu">
       <li class="tasksCount">Tasks <span>0</span></li>
-      <li class="Clear_all"><ion-icon class="Clear_all_Ico" name="close"></ion-icon> Clear All Tasks</li>
+      <li class="Clear_all_aside"><ion-icon class="Clear_all_Ico" name="close"></ion-icon> Clear All Tasks</li>
     </aside>
     <div class="container">
       <div class="taskContaienr">
@@ -63,6 +64,7 @@
       <div class="add_container">
         <label class="txInputLbl" for="textInput">Add Task</label>
         <input class="textInput" type="text" placeholder="Enter Your Task Title here and prees on ( + ) button" id="textInput">
+        <ion-icon class="empty_field" name="backspace"></ion-icon>
         <ion-icon name="add-outline" class="addButton" id="addButton"></ion-icon>
       </div>
     </div>
