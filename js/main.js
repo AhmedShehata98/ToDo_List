@@ -1,6 +1,6 @@
 const inputFiled = document.querySelector('#textInput');
 const addBtn     = document.querySelector('#addButton');
-const add_container = document.querySelector('.add_container');
+const add_container    = document.querySelector('.add_container');
 const tasksCount = document.querySelector('.tasksCount span');
 const masterDiv  = document.querySelector('.taskContaienr');
 const clear_all  = document.querySelector('.Clear_all');
@@ -9,7 +9,8 @@ const Theme_picker_Box = document.querySelector('.theme_Box');
 const Litems  = document.querySelectorAll('.theme_Box ul li');
 const color_Box  = document.querySelectorAll('.colorBox')
 const menuBtn    = document.querySelector('.Toggle');
-const status_menu    = document.querySelector('.menu');
+const status_menu      = document.querySelector('.menu');
+const RootElement= document.querySelector(':root');
 //Create Array To Store Task
 
 let TasksContainer =[];
@@ -21,6 +22,8 @@ if ( window.localStorage.getItem('Task') !== null && TasksContainer == '')
 }
 
 //Get Items From LocalStorage in Page Load
+// NIGHT_MODE_SWITCHER();
+// LIGHT_MODE_SWITCHER();
 GetLocalStorage();
 
 
@@ -44,7 +47,7 @@ addBtn.addEventListener( 'click',()=>{
     }else{
 
         STORE_VALUE(inputFiled.value.trim());
-        inputFiled.innerHTML = '';
+        inputFiled.value = '';
 
         //Focus on Input Filed After Adding Task
         FocusIN(inputFiled);
@@ -124,12 +127,19 @@ function BUILD_HTML_ELEMENT(ArrayValues){
         window.localStorage.setItem('Task' , JSON.stringify(Task));
     }
 
+    
+
     //Get Elements From Local Storage
     function GetLocalStorage(){
         let Data = window.localStorage.getItem('Task')
         if(Data){
             let DataConverted = JSON.parse(Data);
                 BUILD_HTML_ELEMENT(DataConverted)
+        }
+        if (window.localStorage.getItem('night_Mode_body') !== null && window.localStorage.getItem('night_Mode_txt') !== null ) {
+            window.localStorage.getItem('night_Mode_body')
+            window.localStorage.getItem('night_Mode_txt' )
+            
         }
     }
 
@@ -185,14 +195,14 @@ function BUILD_HTML_ELEMENT(ArrayValues){
     //clear All BTN Properties 
 
     clear_all.addEventListener('click',()=>{
-        masterDiv.innerHTML="";
         window.localStorage.removeItem('Task');
-        INCREMENT_OR_DEC_CONT();
+        masterDiv.innerHTML="";
+        location.reload()
     })
     document.querySelector('.Clear_all_aside').addEventListener('click' , ()=>{
-        masterDiv.innerHTML="";
         window.localStorage.removeItem('Task')
-        INCREMENT_OR_DEC_CONT();
+        masterDiv.innerHTML="";
+        location.reload()
     })
 
     //add click event to open status menu
@@ -224,10 +234,7 @@ function BUILD_HTML_ELEMENT(ArrayValues){
         }
         function GetPickedColor(){
             window.localStorage.getItem('Task_back_Color');
-            masterDiv.style.backgroundColor=window.localStorage.getItem('Task_back_Color');
-            add_container.style.backgroundColor=window.localStorage.getItem('Task_back_Color');
-            document.querySelector('.Clear_all_aside').backgroundColor=window.localStorage.getItem('Task_back_Color');
-
+            RootElement.style.setProperty('--main-clr',window.localStorage.getItem('Task_back_Color')); 
         }
         
         //Task Count Inc/decrement Function
@@ -264,4 +271,35 @@ function BUILD_HTML_ELEMENT(ArrayValues){
                 STORE_VALUE(inputFiled.value.trim());
                 inputFiled.innerHTML = '';
             }
+        }
+
+        // Create Night Mode 
+        function NIGHT_MODE_SWITCHER(){
+            SAVE_NIGHT_MODE();
+            document.querySelector('.Night').addEventListener('click' , ()=>{
+                document.querySelector('.Night').style.visibility= "hidden";
+                document.querySelector('.Light').style.display="flex"
+                RootElement.style.setProperty('--main-clr' , window.localStorage.getItem('Task_back_Color'))
+            })
+        }
+
+        function SAVE_NIGHT_MODE(){
+
+            window.localStorage.setItem('night_Mode_body' , RootElement.style.setProperty('--sec-clr','#212121'));
+            window.localStorage.setItem('night_Mode_txt' , RootElement.style.setProperty('--tx-clr','#F9F9F9'));
+        }
+
+        //Create Light Mode
+        function LIGHT_MODE_SWITCHER(){
+            SAVE_LIGHT_MODE();
+            document.querySelector('.Light').addEventListener('click' , ()=>{
+                document.querySelector('.Light').style.display= "none";
+                document.querySelector('.Night').style.visibility= "visible";
+
+            })
+        }
+
+        function SAVE_LIGHT_MODE(){
+            window.localStorage.setItem('Light_Mode_body' , RootElement.style.setProperty('--sec-clr','#EEEEEE') )
+            window.localStorage.setItem('Light_Mode_txt' , RootElement.style.setProperty('--tx-clr','#090910') )
         }
