@@ -22,8 +22,9 @@ if ( window.localStorage.getItem('Task') !== null && TasksContainer == '')
 }
 
 //Get Items From LocalStorage in Page Load
-// NIGHT_MODE_SWITCHER();
-// LIGHT_MODE_SWITCHER();
+GET_MODE_NOW();
+NIGHT_MODE_SWITCHER();
+LIGHT_MODE_SWITCHER();
 GetLocalStorage();
 
 
@@ -275,31 +276,45 @@ function BUILD_HTML_ELEMENT(ArrayValues){
 
         // Create Night Mode 
         function NIGHT_MODE_SWITCHER(){
-            SAVE_NIGHT_MODE();
-            document.querySelector('.Night').addEventListener('click' , ()=>{
-                document.querySelector('.Night').style.visibility= "hidden";
-                document.querySelector('.Light').style.display="flex"
+            document.querySelector('.Night_mode').addEventListener('click' , ()=>{
+                SAVE_NIGHT_MOD();
+                document.querySelector('.Night_mode').style.display= "none";
+                document.querySelector('.Light_mode').style.display="block"
+                document.querySelector('body').classList.toggle('Dark_Mode')
                 RootElement.style.setProperty('--main-clr' , window.localStorage.getItem('Task_back_Color'))
             })
         }
 
-        function SAVE_NIGHT_MODE(){
-
-            window.localStorage.setItem('night_Mode_body' , RootElement.style.setProperty('--sec-clr','#212121'));
-            window.localStorage.setItem('night_Mode_txt' , RootElement.style.setProperty('--tx-clr','#F9F9F9'));
-        }
-
         //Create Light Mode
         function LIGHT_MODE_SWITCHER(){
-            SAVE_LIGHT_MODE();
-            document.querySelector('.Light').addEventListener('click' , ()=>{
-                document.querySelector('.Light').style.display= "none";
-                document.querySelector('.Night').style.visibility= "visible";
-
+            document.querySelector('.Light_mode').addEventListener('click' , ()=>{
+                SAVE_LIGHT_MOD();
+                document.querySelector('.Light_mode').style.display= "none";
+                document.querySelector('.Night_mode').style.display= "block";
+                if (document.querySelector('body').classList.contains('Dark_Mode')) {
+                    
+                    document.querySelector('body').classList.remove('Dark_Mode');
+                }
             })
         }
-
-        function SAVE_LIGHT_MODE(){
-            window.localStorage.setItem('Light_Mode_body' , RootElement.style.setProperty('--sec-clr','#EEEEEE') )
-            window.localStorage.setItem('Light_Mode_txt' , RootElement.style.setProperty('--tx-clr','#090910') )
+        //Save Night Mode In Local Storage 
+        function SAVE_NIGHT_MOD(){
+            window.localStorage.setItem('ModeNow', "#212121" )
+        }
+        //Save Light Mode In Local Storage 
+        function SAVE_LIGHT_MOD(){
+            window.localStorage.setItem('ModeNow' , "#EEEEEE")
+        }
+        //Gey Both Night or Light Mode based On If condetion and Save Local Storage Item
+        function GET_MODE_NOW(){
+        
+            if (window.localStorage.getItem('ModeNow') == '#212121') {
+                document.querySelector('body').classList.add('Dark_Mode');
+                document.querySelector('.Light_mode').style.display= "block";
+                document.querySelector('.Night_mode').style.display= "none";
+            }else if( window.localStorage.getItem('ModeNow') == '#EEEEEE' ){
+                document.querySelector('.Light_mode').style.display = 'none'
+                document.querySelector('.Night_mode').style.display = 'block'
+            }
+            
         }

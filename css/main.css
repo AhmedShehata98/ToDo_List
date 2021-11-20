@@ -31,6 +31,11 @@ header{
   box-shadow: 0px 5px 10px #252525;
   z-index: 250;
 }
+header nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 header .Toggle,
 header .Theme{
   font-size: 2.0em;
@@ -118,8 +123,12 @@ header .logo{
   justify-content: center;
 }
 header .Theme{
-  color: var(--main-clr);
+  color: var(--tx-clr);
   margin-right: 15px;
+  transition: transform 0.5s;
+}
+header .Theme:hover{
+  transform: rotate(180deg);
 }
 header .theme_Box{
   position: absolute;
@@ -158,44 +167,34 @@ header .theme_Box ul li{
   height: 50px;
   
 }
-header .theme_Box .Night{
-  position: relative;
-  display: flex;
-  width: max-content;
-  font-size: 1.1em;
-  font-weight: bold;
-  cursor: pointer;
-  justify-content: space-evenly;
-  align-items: center;
-  padding: 15px;
-  margin: auto;
-}
-header .theme_Box .Night_mode{
-  font-size: 1.5em;
+
+header nav .Night_mode{
+  font-size: 1.7em;
   color: #7952B3;
   margin-right: 10px;
   cursor: pointer;
+  transition: transform 0.5s;
 }
-header .theme_Box .Light{
-  position: absolute;
-  left: 25%;
-  bottom: 5%;
-  font-size: 1.1em;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  cursor: pointer;
-  display: none;
+
+header nav .Night_mode:hover{
+  transform: rotate(40deg);
 }
-header .theme_Box .Light .Light_mode{
+header .Light_mode{
   color: #FFC107;
-  font-size: 1.5em;
+  font-size: 1.7em;
   margin-right: 10px;
   cursor: pointer;
-
+  display: none;
+  transition: transform 0.5s;
 }
-
+header .Light_mode:hover{
+  transform: rotate(100deg);
+}
+.Dark_Mode{
+  --sec-clr:#212121;
+  --tx-clr: #F9F9F9;
+  
+}
 header .logo .logoTXT{
   font-size: 1.5em;
 }
@@ -321,11 +320,22 @@ section .container .add_container{
 }
 section .container .add_container .empty_field{
   position: absolute;
-  right: 9%;
+  right: 10%;
+  padding: 4px;
   font-size: 2.0em;
   cursor: pointer;
+  background-color: #FFF;
   color: #292929;
   transition: color 0.3s ;
+  box-shadow: -3px 0px 5px #c4c4c4;
+}
+@media (max-width:768px) {
+  section .container .add_container .empty_field{
+    top: 45%;
+    right: 3%;
+    transform: translateY(-50%);
+  }
+  
 }
 section .container .add_container .empty_field:hover{
   color: #bb0101;
