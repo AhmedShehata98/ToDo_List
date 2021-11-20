@@ -320,7 +320,7 @@ section .container .add_container{
 }
 section .container .add_container .empty_field{
   position: absolute;
-  right: 10%;
+  right: 5%;
   padding: 4px;
   font-size: 2.0em;
   cursor: pointer;
